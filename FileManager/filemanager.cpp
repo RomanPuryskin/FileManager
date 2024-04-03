@@ -2,17 +2,28 @@
 
 FileManager::FileManager()
 {
-
+    this->trackers = std::vector<Tracker*>();
 }
 
-void FileManager::checkFIle(QString path)
+FileManager::~FileManager()
 {
-    fileInfo = QFileInfo(path);
-    if(fileInfo.isFile())
-    {
-        std::cout<<"Yes file";
-    }
+    for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
+        delete *it;
+    trackers.clear();
+}
 
-    else
-        std::cout<<"No file";
+void FileManager::addTracker(QString path)
+{
+    trackers.push_back(new Tracker(path));
+}
+
+void FileManager::printInfo()
+{
+    for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
+    {
+        if((*it)->getFileInfo().exists())
+            std::cout<<"Yes file"<<std::endl;
+        else
+            std::cout<<"No file"<<std::endl;
+    }
 }
