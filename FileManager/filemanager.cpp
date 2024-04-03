@@ -14,7 +14,14 @@ FileManager::~FileManager()
 
 void FileManager::addTracker(QString path)
 {
-    trackers.push_back(new Tracker(path));
+    bool alreadyExist = true;
+    for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
+    {
+        if((*it)->getPath() == path)
+            alreadyExist = false;
+    }
+    if(alreadyExist)
+        trackers.push_back(new Tracker(path));
 }
 
 void FileManager::printInfo()

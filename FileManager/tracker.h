@@ -11,6 +11,10 @@ public:
     {
         return fileInfo;
     }
+    QString getPath()
+    {
+        return path;
+    }
 private:
     QFileInfo fileInfo;
     QString path;
