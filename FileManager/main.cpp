@@ -12,7 +12,5 @@ int main(int argc, char *argv[])
     fileManager.addTracker(path2);
     fileManager.addTracker(path3);
 
-    fileManager.printInfo();
-
     return a.exec();
 }

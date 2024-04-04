@@ -7,6 +7,7 @@ CONFIG += c++17 cmdline
 
 SOURCES += \
         filemanager.cpp \
+        logger.cpp \
         main.cpp \
         tracker.cpp
 
@@ -17,4 +18,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     filemanager.h \
+    logger.h \
     tracker.h

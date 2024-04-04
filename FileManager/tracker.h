@@ -1,9 +1,10 @@
 #ifndef TRACKER_H
 #define TRACKER_H
 #include <QFileInfo>
-#include <iostream>
-class Tracker
+#include <QObject>
+class Tracker : public QObject
 {
+    Q_OBJECT
 public:
     Tracker(QString path);
     ~Tracker(){}
@@ -15,6 +16,7 @@ public:
     {
         return path;
     }
+
 private:
     QFileInfo fileInfo;
     QString path;

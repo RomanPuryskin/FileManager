@@ -1,10 +1,7 @@
 #ifndef FILEMANAGER_H
 #define FILEMANAGER_H
 #include <vector>
-#include <QObject>
-#include <QFileInfo>
-#include "tracker.h"
-
+#include "logger.h"
 class FileManager : public QObject //нужен лишь один экземпеляр класса, используем паттерн одиночки
 {
     Q_OBJECT
@@ -24,6 +21,9 @@ private:
     FileManager(FileManager const&);
     FileManager& operator= (FileManager const&);
     std::vector<Tracker*> trackers;
+    Logger *logger;
+signals:
+    addTrackerSignal();
 };
 
 #endif // FILEMANAGER_H

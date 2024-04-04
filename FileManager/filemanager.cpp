@@ -3,6 +3,7 @@
 FileManager::FileManager()
 {
     this->trackers = std::vector<Tracker*>();
+    //Logger *logger = new Logger();
 }
 
 FileManager::~FileManager()
@@ -10,27 +11,22 @@ FileManager::~FileManager()
     for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
         delete *it;
     trackers.clear();
+    //delete logger;
 }
 
 void FileManager::addTracker(QString path)
 {
-    bool alreadyExist = true;
+    bool alreadyExist = false;
     for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
     {
         if((*it)->getPath() == path)
-            alreadyExist = false;
+            alreadyExist = true;
     }
-    if(alreadyExist)
-        trackers.push_back(new Tracker(path));
+    if(!alreadyExist)
+    {
+        Tracker *tracker = new Tracker(path);
+        trackers.push_back(tracker);
+        logger->PrintInfo(tracker);
+    }
 }
 
-void FileManager::printInfo()
-{
-    for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
-    {
-        if((*it)->getFileInfo().exists())
-            std::cout<<"Yes file"<<std::endl;
-        else
-            std::cout<<"No file"<<std::endl;
-    }
-}
