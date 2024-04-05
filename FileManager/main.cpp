@@ -1,5 +1,6 @@
 #include <QCoreApplication>
 #include "filemanager.h"
+#include <typeinfo>
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
@@ -12,5 +13,6 @@ int main(int argc, char *argv[])
     fileManager.addTracker(path2);
     fileManager.addTracker(path3);
 
+    fileManager.startTracking();
     return a.exec();
 }

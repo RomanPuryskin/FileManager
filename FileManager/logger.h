@@ -8,7 +8,7 @@ class Logger
 public:
     Logger();
     ~Logger(){}
-    void PrintInfo(Tracker* tracker);
+    void PrintFirstInfo(Tracker* tracker);
 };
 
 #endif // LOGGER_H

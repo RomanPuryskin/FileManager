@@ -3,5 +3,12 @@
 Tracker::Tracker(QString path)
 {
     this->path = path;
-    this->fileInfo = QFileInfo(path);
+    fileInfo = QFileInfo(path);
+    isFileExist = fileInfo.exists();
+}
+
+bool Tracker::CheckFileExists()
+{
+    fileInfo.refresh();
+    return fileInfo.exists();
 }

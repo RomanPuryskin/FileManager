@@ -17,7 +17,19 @@ public:
         return path;
     }
 
+    bool getIsFileExist()
+    {
+        return isFileExist;
+    }
+
+    void setIsFileExist(bool exist)
+    {
+        this->isFileExist = exist;
+    }
+    bool CheckFileExists();
+    bool isFileExist; // состояние файла(существует/не существует)
 private:
+
     QFileInfo fileInfo;
     QString path;
 };

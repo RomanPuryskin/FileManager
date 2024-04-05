@@ -5,12 +5,16 @@ Logger::Logger()
 
 }
 
-void Logger::PrintInfo(Tracker *tracker)
+// информация о файлах которая выводится изначально
+void Logger::PrintFirstInfo(Tracker *tracker)
 {
     QString fileName = tracker->getFileInfo().fileName();
-    if(tracker->getFileInfo().exists())
-        std::cout<<fileName.toStdString()<<" "<<"Yes file"<<std::endl;
+    if(tracker->isFileExist)
+    {
+        qint64 size = tracker->getFileInfo().size();
+        std::cout<<fileName.toStdString()<<" "<<"Exists"<<" "<<size<<"b"<<std::endl;
+    }
 
     else
-        std::cout<<fileName.toStdString()<<" "<<"No file"<<std::endl;
+        std::cout<<fileName.toStdString()<<" "<<"Doesn't exist"<<std::endl;
 }
