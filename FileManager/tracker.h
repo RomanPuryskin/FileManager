@@ -2,9 +2,10 @@
 #define TRACKER_H
 #include <QFileInfo>
 #include <QObject>
-class Tracker : public QObject
+#include <QDateTime>
+#include <QFile>
+class Tracker
 {
-    Q_OBJECT
 public:
     Tracker(QString path);
     ~Tracker(){}
@@ -24,14 +25,24 @@ public:
 
     void setIsFileExist(bool exist)
     {
-        this->isFileExist = exist;
+        isFileExist = exist;
     }
     bool CheckFileExists();
-    bool isFileExist; // состояние файла(существует/не существует)
-private:
 
+    QDateTime getLastChange()
+    {
+        return lastChange;
+    }
+    void setLastChange(QDateTime temp)
+    {
+        lastChange = temp;
+    }
+    QDateTime CheckFileChanges();
+private:
+    QDateTime lastChange;
     QFileInfo fileInfo;
     QString path;
+    bool isFileExist;
 };
 
 #endif // TRACKER_H

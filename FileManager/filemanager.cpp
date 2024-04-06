@@ -2,8 +2,10 @@
 
 FileManager::FileManager()
 {
-    this->trackers = std::vector<Tracker*>();
+    trackers = std::vector<Tracker*>();
+    logger = new Logger();
     connect(this,&FileManager::fileExistChanged,this,&FileManager::rePrint);
+    connect(this,&FileManager::fileChanged,this,&FileManager::rePrint);
 }
 
 FileManager::~FileManager()
@@ -11,7 +13,9 @@ FileManager::~FileManager()
     for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
         delete *it;
     trackers.clear();
+     delete logger;
 }
+
 
 void FileManager::addTracker(QString path)
 {
@@ -38,15 +42,21 @@ void FileManager::startTracking()
     {
         for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
         {
-            if( !(*it)->isFileExist && (*it)->CheckFileExists() )
+            if( !(*it)->getIsFileExist() && (*it)->CheckFileExists() )
             {
                 (*it)->setIsFileExist(true);
                 emit fileExistChanged();
             }
-            else if ((*it)->isFileExist && !(*it)->CheckFileExists())
+            if ((*it)->getIsFileExist() && !(*it)->CheckFileExists())
             {
                 (*it)->setIsFileExist(false);
                 emit fileExistChanged();
+            }
+
+            if( (*it)->CheckFileChanges() > (*it)->getLastChange())
+            {
+                (*it)->setLastChange((*it)->CheckFileChanges());
+                emit fileChanged();
             }
         }
 

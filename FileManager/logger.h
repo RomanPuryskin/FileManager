@@ -3,8 +3,10 @@
 #include <iostream>
 #include <QObject>
 #include "tracker.h"
-class Logger
+class Logger : public QObject
 {
+    Q_OBJECT
+    friend class FileManager;
 public:
     Logger();
     ~Logger(){}
