@@ -23,7 +23,12 @@ void FileManager::addTracker(QString path)
     for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
     {
         if((*it)->getPath() == path)
+        {
             alreadyExist = true;
+            std::cerr<<"File already exists in manager"<<std::endl;
+        }
+
+
     }
     if(!alreadyExist)
     {
