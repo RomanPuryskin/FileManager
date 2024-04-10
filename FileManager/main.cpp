@@ -1,5 +1,37 @@
 #include <QCoreApplication>
 #include "filemanager.h"
+#include <thread>
+void startTracking(FileManager& fileManager)
+{
+    std::vector<Tracker*> trackers = fileManager.getTrackers();
+    (fileManager.getLogger())->setVector(trackers);
+
+    while(true)
+    {
+        for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
+        {
+            if( !(*it)->getIsFileExist() && (*it)->CheckFileExists() )
+            {
+                (*it)->setIsFileExist(true);
+                emit fileManager.fileExistChanged();
+            }
+            if ((*it)->getIsFileExist() && !(*it)->CheckFileExists())
+            {
+                (*it)->setIsFileExist(false);
+                emit fileManager.fileExistChanged();
+            }
+
+            if( (*it)->CheckFileChanges() > (*it)->getLastChange())
+            {
+                (*it)->setLastChange((*it)->CheckFileChanges());
+                emit fileManager.fileChanged();
+            }
+        }
+
+        std::this_thread::sleep_for( std::chrono::milliseconds(1000));
+    }
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
@@ -22,7 +54,6 @@ int main(int argc, char *argv[])
     // добавим уже существующий трекер
     fileManager.addTracker(path3);
 
-
-    fileManager.startTracking();
+    startTracking(fileManager);
     return a.exec();
 }
