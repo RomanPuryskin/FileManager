@@ -13,7 +13,6 @@ public:
     }
 
     void addTracker(QString path);
-    void startTracking();
     std::vector<Tracker*> getTrackers()
     {
         return trackers;
