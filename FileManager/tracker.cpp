@@ -1,18 +1,11 @@
 #include "tracker.h"
-
 Tracker::Tracker(QString path)
 {
     this->path = path;
     fileInfo = QFileInfo(path);
     isFileExist = fileInfo.exists();
-    if (fileInfo.exists())
-    {
+    if (isFileExist)
         lastChange = fileInfo.lastModified();
-    }
-    else
-    {
-        lastChange = QDateTime();
-    }
 }
 
 bool Tracker::CheckFileExists()
@@ -24,5 +17,7 @@ bool Tracker::CheckFileExists()
 QDateTime Tracker::CheckFileChanges()
 {
     fileInfo.refresh();
-    return fileInfo.lastModified();
+    if (fileInfo.exists())
+        return fileInfo.lastModified();
+    return lastChange;
 }

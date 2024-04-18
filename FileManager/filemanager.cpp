@@ -1,5 +1,4 @@
 #include "filemanager.h"
-
 FileManager::FileManager()
 {
     trackers = std::vector<Tracker*>();
@@ -32,6 +31,48 @@ void FileManager::addTracker(QString path)
     {
         Tracker *tracker = new Tracker(path);
         trackers.push_back(tracker);
-        logger->PrintFirstInfo(tracker);
     }
 }
+
+void FileManager::update()
+{
+    for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
+    {
+        if( !(*it)->getIsFileExist() && (*it)->CheckFileExists() )
+        {
+            (*it)->setIsFileExist(true);
+            (*it)->setLastChange((*it)->CheckFileChanges());
+            emit fileExistChanged((*it)->getFileInfo().fileName(),(*it)->getFileInfo().size(),
+                (*it)->getIsFileExist());
+        }
+        if ((*it)->getIsFileExist() && !(*it)->CheckFileExists())
+        {
+            (*it)->setIsFileExist(false);
+            emit fileExistChanged((*it)->getFileInfo().fileName(),(*it)->getFileInfo().size(),
+                                  (*it)->getIsFileExist());
+        }
+
+        if( (*it)->CheckFileChanges() > (*it)->getLastChange())
+        {
+            (*it)->setLastChange((*it)->CheckFileChanges());
+            emit fileChanged((*it)->getFileInfo().fileName(),(*it)->getFileInfo().size(),
+                             (*it)->getIsFileExist());
+        }
+    }
+}
+
+bool FileManager::removeTracker(QString path)
+{
+    for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
+    {
+        if((*it)->getPath() == path)
+        {
+            trackers.erase(it);
+            delete *it;
+            return true;
+        }
+    }
+    return false;
+}
+
+
