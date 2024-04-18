@@ -1,31 +1,15 @@
 #include "logger.h"
-
-Logger::Logger()
+#include <QDebug>
+void Logger::PrintInfo(QString fileName , qint64 size , bool fileExists)
 {
-
+    if(fileExists)
+        qDebug() << "FileName: " << fileName << ", Exists ," <<" size: " << size << "bytes";
+    else
+        qDebug() << "FileName: " <<fileName << ", Doesn't exist";
 }
 
-// информация о файлах которая выводится изначально
-void Logger::PrintFirstInfo(Tracker *tracker)
-{
-    QString fileName = tracker->getFileInfo().fileName();
-        if(tracker->getIsFileExist())
-        {
-            qint64 size = tracker->getFileInfo().size();
-            std::cout<<fileName.toStdString()<<" Exists "<<size<<"b"<<std::endl;
-        }
 
-        if(!tracker->getIsFileExist())
-        {
-            std::cout<<fileName.toStdString()<<" Doesn't exist"<<std::endl;
-        }
-}
-
-void Logger::rePrint()
+void Logger::rePrint(QString fileName , qint64 size , bool fileExists)
 {
-        system("cls");
-        for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
-        {
-            PrintFirstInfo((*it));
-        }
+    PrintInfo(fileName,size,fileExists);
 }

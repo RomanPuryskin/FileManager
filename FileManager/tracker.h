@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDateTime>
 #include <QFile>
+
 class Tracker
 {
 public:
@@ -39,7 +40,7 @@ public:
     }
     QDateTime CheckFileChanges();
 private:
-    QDateTime lastChange;
+    QDateTime lastChange = QDateTime();
     QFileInfo fileInfo;
     QString path;
     bool isFileExist;

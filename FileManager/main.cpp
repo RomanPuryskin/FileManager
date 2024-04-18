@@ -1,34 +1,23 @@
 #include <QCoreApplication>
 #include "filemanager.h"
 #include <thread>
+
 void startTracking(FileManager& fileManager)
 {
-    std::vector<Tracker*> trackers = fileManager.getTrackers();
-    (fileManager.getLogger())->setVector(trackers);
-
     while(true)
     {
-        for(std::vector<Tracker*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
-        {
-            if( !(*it)->getIsFileExist() && (*it)->CheckFileExists() )
-            {
-                (*it)->setIsFileExist(true);
-                emit fileManager.fileExistChanged();
-            }
-            if ((*it)->getIsFileExist() && !(*it)->CheckFileExists())
-            {
-                (*it)->setIsFileExist(false);
-                emit fileManager.fileExistChanged();
-            }
-
-            if( (*it)->CheckFileChanges() > (*it)->getLastChange())
-            {
-                (*it)->setLastChange((*it)->CheckFileChanges());
-                emit fileManager.fileChanged();
-            }
-        }
-
+        fileManager.update();
         std::this_thread::sleep_for( std::chrono::milliseconds(1000));
+    }
+}
+
+
+void printFirstInfo(FileManager& fileManager)
+{
+    for(int i = 0 ; i<fileManager.getAmountOfTrackers(); i++)
+    {
+        fileManager.getLogger()->PrintInfo(fileManager.getFileInfoById(i).fileName(),
+            fileManager.getFileInfoById(i).size(),fileManager.getFileInfoById(i).exists());
     }
 }
 
@@ -48,12 +37,13 @@ int main(int argc, char *argv[])
     fileManager.addTracker(path3);
 
     // добавим путь как случайную строку
-    QString path4 = "tyrt";
-    fileManager.addTracker(path4);
+ /* QString path4 = "tyrt";
+    fileManager.addTracker(path4);*/
 
     // добавим уже существующий трекер
-    fileManager.addTracker(path3);
+   // fileManager.addTracker(path3);
 
+    printFirstInfo(fileManager);
     startTracking(fileManager);
     return a.exec();
 }

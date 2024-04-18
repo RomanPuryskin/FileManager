@@ -4,6 +4,7 @@
 #include <iostream>
 #include "logger.h"
 #include "tracker.h"
+
 class FileManager : public QObject //нужен лишь один экземпеляр класса, используем паттерн одиночки
 {
     Q_OBJECT
