@@ -27,13 +27,13 @@ int main(int argc, char *argv[])
     FileManager& fileManager = FileManager::Instance();
 
     //----------------Test------------//
-    QString path1 = "C:/Projects/TRPO/FilesForManager/file1.txt";
+    QString path1 = "../file1.txt";
     fileManager.addTracker(path1);
 
-    QString path2 = "C:/Projects/TRPO/FilesForManager/file2.txt";
+    QString path2 = "../file2.txt";
     fileManager.addTracker(path2);
 
-    QString path3 = "C:/Projects/TRPO/FilesForManager/file3.txt";
+    QString path3 = "../file3.txt";
     fileManager.addTracker(path3);
 
     // добавим путь как случайную строку
