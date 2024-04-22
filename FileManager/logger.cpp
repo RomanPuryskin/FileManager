@@ -9,7 +9,12 @@ void Logger::PrintInfo(QString fileName , qint64 size , bool fileExists)
 }
 
 
-void Logger::rePrint(QString fileName , qint64 size , bool fileExists)
+void Logger::PrintFileExistChanged(QString fileName , qint64 size , bool fileExists)
 {
     PrintInfo(fileName,size,fileExists);
+}
+
+void Logger::PrintFileChanged(QString fileName, qint64 size)
+{
+    qDebug() << "FileName: " << fileName << ", Exists (has changed)," <<" size: " << size << "bytes";
 }

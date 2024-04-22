@@ -10,7 +10,8 @@ public:
     ~Logger(){}
     void PrintInfo(QString fileName , qint64 size , bool fileExists);
 public slots:
-    void rePrint(QString fileName , qint64 size , bool fileExists);
+    void PrintFileExistChanged(QString fileName , qint64 size , bool fileExists);
+    void PrintFileChanged(QString fileName , qint64 size);
 };
 
 #endif // LOGGER_H

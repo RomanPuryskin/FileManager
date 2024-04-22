@@ -43,7 +43,7 @@ protected:
     Logger *logger;
 signals:
     void fileExistChanged(QString fileName , qint64 size , bool fileExists);
-    void fileChanged(QString fileName , qint64 size , bool fileExists);
+    void fileChanged(QString fileName , qint64 size);
 };
 
 #endif // FILEMANAGER_H

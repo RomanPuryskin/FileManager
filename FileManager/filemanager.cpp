@@ -3,8 +3,8 @@ FileManager::FileManager()
 {
     trackers = std::vector<Tracker*>();
     logger = new Logger();
-    connect(this,&FileManager::fileExistChanged,logger,&Logger::rePrint);
-    connect(this,&FileManager::fileChanged,logger,&Logger::rePrint);
+    connect(this,&FileManager::fileExistChanged,logger,&Logger::PrintFileExistChanged);
+    connect(this,&FileManager::fileChanged,logger,&Logger::PrintFileChanged);
 }
 
 FileManager::~FileManager()
@@ -55,8 +55,7 @@ void FileManager::update()
         if( (*it)->CheckFileChanges() > (*it)->getLastChange())
         {
             (*it)->setLastChange((*it)->CheckFileChanges());
-            emit fileChanged((*it)->getFileInfo().fileName(),(*it)->getFileInfo().size(),
-                             (*it)->getIsFileExist());
+            emit fileChanged((*it)->getFileInfo().fileName(),(*it)->getFileInfo().size());
         }
     }
 }
